@@ -2,6 +2,7 @@ package br.edu.ifsp.scl.ads.pdm.intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,8 @@ import br.edu.ifsp.scl.ads.pdm.intent.databinding.ActivityOutraBinding;
 public class OutraActivity extends AppCompatActivity {
     //instancia da classe de View Binding
     private ActivityOutraBinding activityOutraBinding;
+
+    public static final String RETORNO = "RETORNO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,12 @@ public class OutraActivity extends AppCompatActivity {
             String parametro = parametrosBundle.getString(MainActivity.PARAMETRO, "");
             activityOutraBinding.recebidoTv.setText(parametro);
         }
+
+        // Recebendo parametros pela form #2
+        //String parametro = getIntent().getStringExtra(MainActivity.PARAMETRO);
+        //if (parametro != null) {
+        //activityOutraBinding.recebidoTv.setText(parametro);
+        //}
 
         Log.v(R.string.app_name + "/" + getLocalClassName(), "OnCreate: Iniciando ciclo completo");
     }
@@ -61,6 +70,11 @@ public class OutraActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
+
+        Intent retornoIntent = new Intent();
+        retornoIntent.putExtra(RETORNO, activityOutraBinding.retornoEt.getText().toString());
+        setResult(RESULT_OK, retornoIntent);
+
         finish(); // Chama na sequencia onPause, onStop, onDestroy
     }
 }
